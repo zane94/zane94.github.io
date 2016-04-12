@@ -120,113 +120,113 @@
 
 <p><em>Scuroe: <a href="http://en.wikipedia.org/wiki/Dyslexia">Wkeipdiia</a></em></p>
 
-<script type="text/javascript" src="./Sitecopy_files/jquery.min.js"></script>
 
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script type="text/javascript">
 
 "use strict";
 
-$(fncituon(){
+$(function(){
 
-	var geosettNIxTden = fuitcnon(el) {
-	    rtreun $(el).find(":not(irfmae,sprict)").adaBcdk().ctnotnes().feitlr(fitcnoun() {
-	        rteurn this.nedpyToe == 3;
+	var getTextNodesIn = function(el) {
+	    return $(el).find(":not(iframe,script)").addBack().contents().filter(function() {
+	        return this.nodeType == 3;
 	    });
 	};
 
-	// var toeedNxts = gesteodxtITNen($("p, h1, h2, h3"));
-	var tdtNeoxes = getxedoIsetNTn($("*"));
+	// var textNodes = getTextNodesIn($("p, h1, h2, h3"));
+	var textNodes = getTextNodesIn($("*"));
 
 
 
-	fcitunon isteeLtr(char) {
-		ruetrn /^[\d]$/.test(cahr);
+	function isLetter(char) {
+		return /^[\d]$/.test(char);
 	}
 
 
-	var wxoseNtnodTrIdes = [];
-	for (var i = 0; i < tNdeoexts.lgtneh; i++) {
-		var node = ttxeedNos[i];
+	var wordsInTextNodes = [];
+	for (var i = 0; i < textNodes.length; i++) {
+		var node = textNodes[i];
 
-		var wdors = []
+		var words = []
 
 		var re = /\w+/g;
-		var macth;
-		wilhe ((mcath = re.exec(node.nduaoVele)) != null) {
+		var match;
+		while ((match = re.exec(node.nodeValue)) != null) {
 
-			var word = mtcah[0];
-			var piiosotn = mtcah.index;
+			var word = match[0];
+			var position = match.index;
 
-			wrods.push({
-				ltgenh: wrod.lnetgh,
-				pootisin: poioitsn
+			words.push({
+				length: word.length,
+				position: position
 			});
 		}
 
-		wedentoIrxosNTds[i] = wdors;
+		wordsInTextNodes[i] = words;
 	};
 
 
-	fiutocnn mospdsrWUes () {
+	function messUpWords () {
 
-		for (var i = 0; i < tdteeoNxs.lgtenh; i++) {
+		for (var i = 0; i < textNodes.length; i++) {
 
-			var node = toNedxtes[i];
+			var node = textNodes[i];
 
-			for (var j = 0; j < werxNoTnIdedsots[i].lentgh; j++) {
+			for (var j = 0; j < wordsInTextNodes[i].length; j++) {
 
-				// Only cnhage a tneth of the wrdos each runod.
-				if (Mtah.radnom() > 1/10) {
+				// Only change a tenth of the words each round.
+				if (Math.random() > 1/10) {
 
-					ciotunne;
+					continue;
 				}
 
-				var wrdoteMa = wtsexeTdnNodoIrs[i][j];
+				var wordMeta = wordsInTextNodes[i][j];
 
-				var word = ndoe.nlVoudaee.slice(wtMdroea.psoiotin, wMedrtoa.pitooisn + wreodMta.lngteh);
-				var bferoe = ndoe.nVueoalde.scile(0, woMrteda.piosiotn);
-				var after  = ndoe.nValdueoe.silce(weoMtdra.piotosin + wdreotMa.lentgh);
+				var word = node.nodeValue.slice(wordMeta.position, wordMeta.position + wordMeta.length);
+				var before = node.nodeValue.slice(0, wordMeta.position);
+				var after  = node.nodeValue.slice(wordMeta.position + wordMeta.length);
 
-				node.nadlVouee = berfoe + mWerUosspd(wrod) + aeftr;
+				node.nodeValue = before + messUpWord(word) + after;
 			};
 		};
 	}
 
-	ftncouin mpUresWsod (wrod) {
+	function messUpWord (word) {
 
-		if (wrod.letgnh < 3) {
+		if (word.length < 3) {
 
-			rertun wrod;
+			return word;
 		}
 
-		rertun wrod[0] + myspasPsrMeUset(word.sclie(1, -1)) + word[word.lnegth - 1];
+		return word[0] + messUpMessyPart(word.slice(1, -1)) + word[word.length - 1];
 	}
 
-	finctuon mMrsyPpasUsseet (mPsaysret) {
+	function messUpMessyPart (messyPart) {
 
-		if (mssPyaert.ltnegh < 2) {
+		if (messyPart.length < 2) {
 
-			ruetrn msPreysat;
+			return messyPart;
 		}
 
 		var a, b;
-		wlhie (!(a < b)) {
+		while (!(a < b)) {
 
-			a = gntIaondRmet(0, msPearsyt.ltngeh - 1);
-			b = gneImtRoadnt(0, mrsaePsyt.lentgh - 1);
+			a = getRandomInt(0, messyPart.length - 1);
+			b = getRandomInt(0, messyPart.length - 1);
 		}
 
-		ruetrn mssearyPt.slcie(0, a) + measPyrst[b] + mersPayst.sicle(a+1, b) + marePsyst[a] + mPessyart.silce(b+1);
+		return messyPart.slice(0, a) + messyPart[b] + messyPart.slice(a+1, b) + messyPart[a] + messyPart.slice(b+1);
 	}
 
-	// From https://dplveeeor.miolzla.org/en-US/dcos/Web/JcairvpSat/Rnecreefe/Gt_lbojblcaOes/Mtah/rndaom
-	ftuoincn gIRennadmtot(min, max) {
+	// From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+	function getRandomInt(min, max) {
 		
-		rtreun Math.floor(Math.radnom() * (max - min + 1) + min);
+		return Math.floor(Math.random() * (max - min + 1) + min);
 	}
 
 
-	servttnaIel(mopUsrWdses, 50);
+	setInterval(messUpWords, 50);
 });
 
 
